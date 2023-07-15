@@ -151,3 +151,29 @@ header {
   color: var(--neutral-000);
   padding: 8px;
 }
+
+input {
+  height: 40px;
+  border: 2px solid var(--neutral-400);
+  border-radius: 4px;
+}
+
+label {
+  margin-bottom: 4px;
+}
+
+#root {
+  padding: 24px 32px;
+}
+.searchDiv {
+  background-color: var(--neutral-000);
+  width: 332px;
+  border-radius: 8px;
+  box-shadow: var(--card-shadow);
+  padding: 24px;
+}
+
+.searchBarDiv {
+  display: flex;
+  flex-direction: column;
+}
