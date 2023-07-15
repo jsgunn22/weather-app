@@ -156,10 +156,37 @@ input {
   height: 40px;
   border: 2px solid var(--neutral-400);
   border-radius: 4px;
+  padding: 12px;
+  background-color: transparent;
+  z-index: 2;
+
+  &:focus {
+    outline-color: var(--primary-500);
+  }
 }
 
 label {
+  transition: 0.3s;
+  color: var(--neutral-600);
+  position: absolute;
+  z-index: 1;
   margin-bottom: 4px;
+  padding: 2px;
+  width: fit-content;
+  margin-left: 12px;
+  transform: translateY(10px);
+  font-family: var(--font-family-default);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-medium-text-size);
+  line-height: var(--font-medium-text-line-height);
+}
+
+.labelAct {
+  transition: 0.3s;
+  color: var(--primary-500);
+  background-color: var(--neutral-000);
+  transform: translateY(-8px);
+  z-index: 3;
 }
 
 #root {
@@ -176,4 +203,5 @@ label {
 .searchBarDiv {
   display: flex;
   flex-direction: column;
+  position: relative;
 }
