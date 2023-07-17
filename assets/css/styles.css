@@ -197,6 +197,10 @@ main {
   width: 100%;
 }
 
+img {
+  height: 48px;
+}
+
 .labelAct {
   transition: 0.3s;
   color: var(--primary-500);
@@ -272,6 +276,12 @@ main {
   & p {
     margin-bottom: 16px;
   }
+}
+.todaysDescription {
+  font-family: var(--font-family-default);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-medium-text-size);
+  line-height: var(--font-medium-text-line-height);
 }
 
 .fiveDayDiv {

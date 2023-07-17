@@ -28,6 +28,7 @@ $(function () {
 
   searchButton.on("click", function () {
     let value = searchBar.val();
+    $("main").text("");
     getWeather(value);
   });
 
@@ -107,20 +108,19 @@ $(function () {
     let currentWeather =
       "https://api.openweathermap.org/data/2.5/weather?q=" +
       city +
-      "&appid=04312f12b831bdd890e2b94c161c6483";
+      "&units=imperial&appid=04312f12b831bdd890e2b94c161c6483";
 
     fetch(currentWeather)
       .then(function (response) {
         return response.json();
       })
       .then(function (current) {
-        o(current);
         let todayWeatherDiv = $("<div>");
         main.append(todayWeatherDiv);
         todayWeatherDiv.addClass("todayWeatherDiv");
 
         function getDate() {
-          let getDate = new Date(current.dt);
+          let getDate = new Date(current.dt * 1000);
           var options = { year: "numeric", month: "short", day: "numeric" };
           getDate = getDate.toLocaleString("en-US", options);
           return getDate;
@@ -129,31 +129,42 @@ $(function () {
         // o(dayjs.unix(today.dt).format("MMM D, YYYY"));
         let cityName = city;
         let date = getDate();
-        let symbol = "☀️";
 
         let todaysLabel = $("<h1>");
 
         todayWeatherDiv.append(todaysLabel);
-        todaysLabel.text(cityName + ", " + date + " " + symbol);
+        todaysLabel.text(cityName + ", " + date);
 
-        let getTemp = current.main.temp;
+        let getTemp = current.main.temp + "ºF";
         let getWind = current.wind.speed + " MPH";
         let getHum = current.main.humidity + "%";
+        let getIcon = current.weather[0].icon;
+        let getDescription = current.weather[0].description;
 
         let temperature = $("<h4>");
         let wind = $("<h4>");
         let humidity = $("<h4>");
+        let icon = $("<img>");
+        let description = $("<p>");
 
-        todayWeatherDiv.append(temperature).append(wind).append(humidity);
+        todayWeatherDiv
+          .append(icon)
+          .append(description)
+          .append(temperature)
+          .append(wind)
+          .append(humidity);
+        icon.attr("src", "./assets/images/weather-icons/" + getIcon + ".png");
+        description.addClass("todaysDescription").text(getDescription);
         temperature.css("margin-top", "24px").text("Temperature: " + getTemp);
         wind.css("margin-top", "24px").text("Wind Speed: " + getWind);
         humidity.css("margin-top", "24px").text("Humidity: " + getHum);
       });
 
+    // five day forcast
     let fetchFiveDayWeather =
       "https://api.openweathermap.org/data/2.5/forecast?q=" +
       city +
-      "&appid=04312f12b831bdd890e2b94c161c6483";
+      "&units=imperial&appid=04312f12b831bdd890e2b94c161c6483";
 
     fetch(fetchFiveDayWeather)
       .then(function (response) {
@@ -168,43 +179,52 @@ $(function () {
           return getDate;
         }
 
-        // five day forcast
+        function getIcon(data) {
+          let icon = weather.list[data].weather[0].icon;
+          let srcIcon = "./assets/images/weather-icons/" + icon + ".png";
+          return srcIcon;
+        }
 
         let getFiveDay = [
           {
-            date: getDate(0),
-            symbol: "🌙",
-            temperature: "98º",
-            wind: "12mph",
-            humid: "40%",
+            date: getDate(7),
+            symbol: getIcon(7),
+            description: weather.list[7].weather[0].description,
+            temperature: weather.list[7].main.temp,
+            wind: weather.list[7].wind.speed,
+            humid: weather.list[7].main.humidity,
           },
           {
             date: getDate(9),
-            symbol: "🌙",
-            temperature: "98º",
-            wind: "12mph",
-            humid: "40%",
+            symbol: getIcon(9),
+            description: weather.list[9].weather[0].description,
+            temperature: weather.list[15].main.temp,
+            wind: weather.list[15].wind.speed,
+            humid: weather.list[15].main.humidity,
           },
           {
             date: getDate(17),
-            symbol: "🌙",
-            temperature: "98º",
-            wind: "12mph",
-            humid: "40%",
+            symbol: getIcon(17),
+            description: weather.list[23].weather[0].description,
+            temperature: weather.list[23].main.temp,
+            wind: weather.list[17].wind.speed,
+            humid: weather.list[17].main.humidity,
           },
           {
             date: getDate(25),
-            symbol: "🌙",
-            temperature: "98º",
-            wind: "12mph",
-            humid: "40%",
+            symbol: getIcon(25),
+            description: weather.list[31].weather[0].description,
+            temperature: weather.list[31].main.temp,
+            wind: weather.list[25].wind.speed,
+            humid: weather.list[25].main.humidity,
           },
           {
             date: getDate(33),
-            symbol: "🌙",
-            temperature: "98º",
-            wind: "12mph",
-            humid: "40%",
+            symbol: getIcon(33),
+            description: weather.list[33].weather[0].description,
+            temperature: weather.list[39].main.temp,
+            wind: weather.list[33].wind.speed,
+            humid: weather.list[33].main.humidity,
           },
         ];
 
@@ -213,11 +233,11 @@ $(function () {
         fiveDayDiv.addClass("fiveDayDiv");
 
         for (let i = 0; i < 5; i++) {
-          o(getDate(i));
           //   $.each(getFiveDay, function (i) {
           let card = $("<card>");
           let fdDate = $("<h2>");
-          let fdSymbol = $("<h2>");
+          let fdSymbol = $("<img>");
+          let fdDesc = $("<p>");
           let fdTemp = $("<h4>");
           let fdWind = $("<h4>");
           let fdHum = $("<h4>");
@@ -226,14 +246,16 @@ $(function () {
           card.addClass("fiveDayCard");
           card.append(fdDate);
           card.append(fdSymbol);
+          card.append(fdDesc);
           card.append(fdTemp);
           card.append(fdWind);
           card.append(fdHum);
           fdDate.text(getFiveDay[i].date);
-          fdSymbol.text(getFiveDay[i].symbol);
-          fdTemp.text("Temperature: ");
-          fdWind.text("Wind Speed: ");
-          fdHum.text("Humidity: ");
+          fdSymbol.attr("src", getFiveDay[i].symbol);
+          fdDesc.text(getFiveDay[i].description);
+          fdTemp.text("Temperature: " + getFiveDay[i].temperature + "ºF");
+          fdWind.text("Wind Speed: " + getFiveDay[i].wind + "MPH");
+          fdHum.text("Humidity: " + getFiveDay[i].humid + "%");
           //   });
         }
       });
