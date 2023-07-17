@@ -146,6 +146,9 @@ body {
 
 #root {
   display: flex;
+  max-width: 1440px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 header {
@@ -191,7 +194,7 @@ hr {
 }
 
 main {
-  margin-right: auto;
+  width: 100%;
 }
 
 .labelAct {
@@ -212,7 +215,6 @@ main {
   box-shadow: var(--card-shadow);
   padding: 24px;
   margin-right: 16px;
-  margin-left: auto;
 }
 
 .searchBarDiv {
@@ -220,6 +222,17 @@ main {
   flex-direction: column;
   position: relative;
   margin-bottom: 16px;
+}
+
+.searchButton {
+  height: 40px;
+  width: 100%;
+  margin-bottom: 16px;
+  border: none;
+  border-radius: 4px;
+  color: var(--neutral-000);
+  background-color: var(--primary-500);
+  cursor: pointer;
 }
 
 .locationTagDiv {
@@ -233,9 +246,29 @@ main {
 }
 
 .todayWeatherDiv {
-  width: 1028px;
+  width: 100%;
   padding: 24px;
   background-color: var(--neutral-000);
   border-radius: 8px;
   box-shadow: var(--card-shadow);
+  color: var(--neutral-900);
+  margin-bottom: 16px;
+}
+
+.fiveDayDiv {
+  display: flex;
+  width: 100%;
+  gap: 16px;
+}
+
+.fiveDayCard {
+  background-color: var(--neutral-000);
+  color: var(--neutral-900);
+  padding: 16px;
+  box-shadow: var(--card-shadow);
+  border-radius: 8px;
+  width: 100%;
+  & h4 {
+    margin-top: 16px;
+  }
 }

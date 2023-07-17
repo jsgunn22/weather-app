@@ -11,6 +11,7 @@ $(function () {
   let searchBarDiv = $("<div>");
   let searchBarLabel = $("<label>");
   let searchBar = $("<input>");
+  let searchButton = $("<button>");
   root.append(searchDiv);
   searchDiv.addClass("searchDiv");
   searchDiv.append(searchBarDiv);
@@ -19,6 +20,15 @@ $(function () {
   searchBarLabel.text("Search Cities");
   searchBarDiv.append(searchBar);
   searchBar.addClass("medium-text");
+  searchDiv.append(searchButton);
+  searchButton.addClass("searchButton");
+  searchButton.text("Submit");
+
+  searchButton.on("click", function () {
+    let value = searchBar.val();
+    o(value);
+  });
+
   searchDiv.append("<hr>");
 
   // search bar label behavior
@@ -26,7 +36,6 @@ $(function () {
     searchBarLabel.addClass("labelAct");
     searchBar.on("focusout", function () {
       if (!searchBar.val()) {
-        o("test");
         searchBarLabel.removeClass("labelAct");
       }
     });
@@ -98,4 +107,70 @@ $(function () {
   temperature.css("margin-top", "24px").text("Temperature: " + getTemp);
   wind.css("margin-top", "24px").text("Wind Speed: " + getWind);
   humidity.css("margin-top", "24px").text("Humidity: " + getHum);
+
+  // five day forcast
+
+  let getFiveDay = [
+    {
+      date: "7/18/2023",
+      symbol: "🌙",
+      temperature: "98º",
+      wind: "12mph",
+      humid: "40%",
+    },
+    {
+      date: "7/19/2023",
+      symbol: "🌙",
+      temperature: "98º",
+      wind: "12mph",
+      humid: "40%",
+    },
+    {
+      date: "7/20/2023",
+      symbol: "🌙",
+      temperature: "98º",
+      wind: "12mph",
+      humid: "40%",
+    },
+    {
+      date: "7/21/2023",
+      symbol: "🌙",
+      temperature: "98º",
+      wind: "12mph",
+      humid: "40%",
+    },
+    {
+      date: "7/22/2023",
+      symbol: "🌙",
+      temperature: "98º",
+      wind: "12mph",
+      humid: "40%",
+    },
+  ];
+
+  let fiveDayDiv = $("<div>");
+  main.append(fiveDayDiv);
+  fiveDayDiv.addClass("fiveDayDiv");
+
+  $.each(getFiveDay, function (i) {
+    let card = $("<card>");
+    let fdDate = $("<h2>");
+    let fdSymbol = $("<h2>");
+    let fdTemp = $("<h4>");
+    let fdWind = $("<h4>");
+    let fdHum = $("<h4>");
+
+    fiveDayDiv.append(card);
+    card.addClass("fiveDayCard");
+    card.append(fdDate);
+    card.append(fdSymbol);
+    card.append(fdTemp);
+    card.append(fdWind);
+    card.append(fdHum);
+    fdDate.text(getFiveDay[i].date);
+    fdSymbol.text(getFiveDay[i].symbol);
+    fdTemp.text("Temperature: ");
+    fdWind.text("Wind Speed: ");
+    fdHum.text("Humidity: ");
+  });
 });
