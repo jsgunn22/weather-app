@@ -104,32 +104,41 @@ $(function () {
 
   // today's weather
   function getWeather(city) {
-    let fetchWeather =
-      "https://api.openweathermap.org/data/2.5/forecast?q=" +
+    let currentWeather =
+      "https://api.openweathermap.org/data/2.5/weather?q=" +
       city +
       "&appid=04312f12b831bdd890e2b94c161c6483";
 
-    fetch(fetchWeather)
+    fetch(currentWeather)
       .then(function (response) {
         return response.json();
       })
-      .then(function (weather) {
+      .then(function (current) {
+        o(current);
         let todayWeatherDiv = $("<div>");
         main.append(todayWeatherDiv);
         todayWeatherDiv.addClass("todayWeatherDiv");
 
-        let cityName = "Sacramento";
-        let date = "7/17/2023";
+        function getDate() {
+          let getDate = new Date(current.dt);
+          var options = { year: "numeric", month: "short", day: "numeric" };
+          getDate = getDate.toLocaleString("en-US", options);
+          return getDate;
+        }
+
+        // o(dayjs.unix(today.dt).format("MMM D, YYYY"));
+        let cityName = city;
+        let date = getDate();
         let symbol = "☀️";
 
         let todaysLabel = $("<h1>");
 
         todayWeatherDiv.append(todaysLabel);
-        todaysLabel.text(cityName + " " + date + " " + symbol);
+        todaysLabel.text(cityName + ", " + date + " " + symbol);
 
-        let getTemp = "98.8º";
-        let getWind = "10 mph";
-        let getHum = "50%";
+        let getTemp = current.main.temp;
+        let getWind = current.wind.speed + " MPH";
+        let getHum = current.main.humidity + "%";
 
         let temperature = $("<h4>");
         let wind = $("<h4>");
@@ -139,40 +148,59 @@ $(function () {
         temperature.css("margin-top", "24px").text("Temperature: " + getTemp);
         wind.css("margin-top", "24px").text("Wind Speed: " + getWind);
         humidity.css("margin-top", "24px").text("Humidity: " + getHum);
+      });
+
+    let fetchFiveDayWeather =
+      "https://api.openweathermap.org/data/2.5/forecast?q=" +
+      city +
+      "&appid=04312f12b831bdd890e2b94c161c6483";
+
+    fetch(fetchFiveDayWeather)
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (weather) {
+        // common function for get date and converting.
+        function getDate(data) {
+          let getDate = new Date(weather.list[data].dt_txt);
+          var options = { year: "numeric", month: "short", day: "numeric" };
+          getDate = getDate.toLocaleString("en-US", options);
+          return getDate;
+        }
 
         // five day forcast
 
         let getFiveDay = [
           {
-            date: "7/18/2023",
+            date: getDate(0),
             symbol: "🌙",
             temperature: "98º",
             wind: "12mph",
             humid: "40%",
           },
           {
-            date: "7/19/2023",
+            date: getDate(9),
             symbol: "🌙",
             temperature: "98º",
             wind: "12mph",
             humid: "40%",
           },
           {
-            date: "7/20/2023",
+            date: getDate(17),
             symbol: "🌙",
             temperature: "98º",
             wind: "12mph",
             humid: "40%",
           },
           {
-            date: "7/21/2023",
+            date: getDate(25),
             symbol: "🌙",
             temperature: "98º",
             wind: "12mph",
             humid: "40%",
           },
           {
-            date: "7/22/2023",
+            date: getDate(33),
             symbol: "🌙",
             temperature: "98º",
             wind: "12mph",
@@ -184,7 +212,9 @@ $(function () {
         main.append(fiveDayDiv);
         fiveDayDiv.addClass("fiveDayDiv");
 
-        $.each(getFiveDay, function (i) {
+        for (let i = 0; i < 5; i++) {
+          o(getDate(i));
+          //   $.each(getFiveDay, function (i) {
           let card = $("<card>");
           let fdDate = $("<h2>");
           let fdSymbol = $("<h2>");
@@ -204,7 +234,8 @@ $(function () {
           fdTemp.text("Temperature: ");
           fdWind.text("Wind Speed: ");
           fdHum.text("Humidity: ");
-        });
+          //   });
+        }
       });
   }
 });
