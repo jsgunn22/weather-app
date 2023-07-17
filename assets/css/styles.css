@@ -144,6 +144,10 @@ body {
   width: 100%;
 }
 
+#root {
+  display: flex;
+}
+
 header {
   background-color: var(--primary-500);
   height: 56px;
@@ -186,6 +190,10 @@ hr {
   margin-bottom: 16px;
 }
 
+main {
+  margin-right: auto;
+}
+
 .labelAct {
   transition: 0.3s;
   color: var(--primary-500);
@@ -203,6 +211,8 @@ hr {
   border-radius: 8px;
   box-shadow: var(--card-shadow);
   padding: 24px;
+  margin-right: 16px;
+  margin-left: auto;
 }
 
 .searchBarDiv {
@@ -220,4 +230,12 @@ hr {
   color: var(--primary-500);
   border-radius: 4px;
   cursor: pointer;
+}
+
+.todayWeatherDiv {
+  width: 1028px;
+  padding: 24px;
+  background-color: var(--neutral-000);
+  border-radius: 8px;
+  box-shadow: var(--card-shadow);
 }

@@ -67,4 +67,35 @@ $(function () {
     o(thisLocation);
   });
   /* End search section */
+
+  /* Main section */
+  let main = $("<main>");
+  root.append(main);
+
+  // today's weather
+  let todayWeatherDiv = $("<div>");
+  main.append(todayWeatherDiv);
+  todayWeatherDiv.addClass("todayWeatherDiv");
+
+  let cityName = "Sacramento";
+  let date = "7/17/2023";
+  let symbol = "☀️";
+
+  let todaysLabel = $("<h1>");
+
+  todayWeatherDiv.append(todaysLabel);
+  todaysLabel.text(cityName + " " + date + " " + symbol);
+
+  let getTemp = "98.8º";
+  let getWind = "10 mph";
+  let getHum = "50%";
+
+  let temperature = $("<h4>");
+  let wind = $("<h4>");
+  let humidity = $("<h4>");
+
+  todayWeatherDiv.append(temperature).append(wind).append(humidity);
+  temperature.css("margin-top", "24px").text("Temperature: " + getTemp);
+  wind.css("margin-top", "24px").text("Wind Speed: " + getWind);
+  humidity.css("margin-top", "24px").text("Humidity: " + getHum);
 });
