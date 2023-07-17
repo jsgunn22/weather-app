@@ -255,6 +255,25 @@ main {
   margin-bottom: 16px;
 }
 
+.emptyStateDiv {
+  width: 100%;
+  padding: 24px;
+  background-color: var(--neutral-000);
+  border-radius: 8px;
+  box-shadow: var(--card-shadow);
+  color: var(--neutral-900);
+  margin-bottom: 16px;
+  color: var(--neutral-500);
+  text-align: center;
+  & h1 {
+    margin-bottom: 16px;
+  }
+
+  & p {
+    margin-bottom: 16px;
+  }
+}
+
 .fiveDayDiv {
   display: flex;
   width: 100%;
