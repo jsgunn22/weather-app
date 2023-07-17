@@ -181,6 +181,11 @@ label {
   line-height: var(--font-medium-text-line-height);
 }
 
+hr {
+  border-color: var(--opacity-neutral);
+  margin-bottom: 16px;
+}
+
 .labelAct {
   transition: 0.3s;
   color: var(--primary-500);
@@ -204,4 +209,15 @@ label {
   display: flex;
   flex-direction: column;
   position: relative;
+  margin-bottom: 16px;
+}
+
+.locationTagDiv {
+  background-color: var(--opacity-primary);
+  padding: 4px 0;
+  text-align: center;
+  margin-bottom: 8px;
+  color: var(--primary-500);
+  border-radius: 4px;
+  cursor: pointer;
 }

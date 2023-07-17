@@ -6,7 +6,7 @@ $(function () {
   let body = $("body");
   let root = body.children().eq(1);
 
-  // Search Section
+  /* Start search section */
   let searchDiv = $("<div>");
   let searchBarDiv = $("<div>");
   let searchBarLabel = $("<label>");
@@ -19,6 +19,7 @@ $(function () {
   searchBarLabel.text("Search Cities");
   searchBarDiv.append(searchBar);
   searchBar.addClass("medium-text");
+  searchDiv.append("<hr>");
 
   // search bar label behavior
   searchBar.on("focus", function () {
@@ -30,4 +31,40 @@ $(function () {
       }
     });
   });
+
+  let locationsArray = [
+    "Sacramento",
+    "Los Angels",
+    "Mokelumne Hill",
+    "Roseville",
+  ];
+
+  //   for (let i = 0; i < locationsArray.length; i++) {
+  //     let locationTagDiv = $("<div>");
+  //     let locationName = $("<h4>");
+
+  //     searchDiv.append(locationTagDiv);
+  //     locationTagDiv.append(locationName);
+  //     locationName.text(locationsArray[i]);
+
+  //     locationTagDiv.addClass("locationTagDiv");
+  //   }
+
+  $.each(locationsArray, function (i) {
+    let locationTagDiv = $("<div>");
+    let locationName = $("<h4>");
+
+    searchDiv.append(locationTagDiv);
+    locationTagDiv.append(locationName);
+    locationName.text(locationsArray[i]);
+
+    locationTagDiv.addClass("locationTagDiv");
+  });
+
+  // event listener for all location tags
+  $("#root").on("click", ".locationTagDiv", function () {
+    let thisLocation = $(this).children().text();
+    o(thisLocation);
+  });
+  /* End search section */
 });
