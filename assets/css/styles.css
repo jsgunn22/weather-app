@@ -228,7 +228,7 @@ img {
   margin-bottom: 16px;
 }
 
-.searchButton {
+.searchButtonDisabled {
   height: 40px;
   width: 100%;
   margin-bottom: 16px;
@@ -236,6 +236,11 @@ img {
   border-radius: 4px;
   color: var(--neutral-000);
   background-color: var(--primary-500);
+  opacity: 0.4;
+}
+
+.searchButton {
+  opacity: 1;
   cursor: pointer;
 }
 

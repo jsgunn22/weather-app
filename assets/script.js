@@ -21,15 +21,22 @@ $(function () {
   searchBarDiv.append(searchBar);
   searchBar.addClass("medium-text");
   searchDiv.append(searchButton);
-  searchButton.addClass("searchButton");
+  searchButton.addClass("searchButtonDisabled");
   searchButton.text("Submit");
 
-  searchButton.on("click", function () {
+  searchButton.click(function () {
     let value = searchBar.val();
     if (value) {
       $("main").text("");
       getRecent(value);
       getWeather(value);
+    }
+  });
+
+  searchBar.keypress(function (event) {
+    o(event);
+    if (event.which == 13) {
+      searchButton.click();
     }
   });
 
@@ -43,6 +50,14 @@ $(function () {
         searchBarLabel.removeClass("labelAct");
       }
     });
+  });
+
+  searchBar.on("change paste keydown", function () {
+    if (searchBar.val()) {
+      searchButton.addClass("searchButton");
+    } else {
+      searchButton.removeClass("searchButton");
+    }
   });
 
   let recentSection = $("<div>");
