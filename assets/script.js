@@ -30,6 +30,7 @@ $(function () {
       $("main").text("");
       getRecent(value);
       getWeather(value);
+      clearBtn(true);
     }
   });
 
@@ -39,8 +40,6 @@ $(function () {
       searchButton.click();
     }
   });
-
-  searchDiv.append("<hr>");
 
   // search bar label behavior
   searchBar.on("focus", function () {
@@ -70,6 +69,8 @@ $(function () {
     if (mostRecent === null) {
       mostRecent = [];
     }
+
+    recentSection.addClass("recentSection");
 
     if (x) {
       if (mostRecent.includes(x)) {
@@ -111,7 +112,21 @@ $(function () {
 
     return mostRecent[0];
   }
+  let clearBtnDiv = $("<div>");
+  searchDiv.append(clearBtnDiv);
+  function clearBtn(c) {
+    clearBtnDiv.text("");
+    if (c) {
+      let clearStorageBtn = $("<button>");
 
+      clearBtnDiv.append(clearStorageBtn);
+      clearStorageBtn.text("Clear History").addClass("clearStorageBtn");
+      clearStorageBtn.on("click", function () {
+        localStorage.removeItem("mostRecent");
+        location.reload();
+      });
+    }
+  }
   // event listener for all location tags
   $("#root").on("click", ".locationTagDiv", function () {
     let thisLocation = $(this).children().text();
@@ -127,6 +142,7 @@ $(function () {
 
   // empty state
   if (localStorage.getItem("mostRecent") == null) {
+    clearBtn(false);
     let emptyStateDiv = $("<div>");
     main.append(emptyStateDiv);
     emptyStateDiv.addClass("emptyStateDiv");
@@ -140,6 +156,7 @@ $(function () {
     emptyStateP.text("Search cities for weather");
   } else {
     let city = getRecent();
+    clearBtn(true);
     getWeather(city);
   }
 
