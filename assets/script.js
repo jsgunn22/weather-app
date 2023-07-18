@@ -6,8 +6,6 @@ $(function () {
   let body = $("body");
   let root = body.children().eq(1);
 
-  let mostRecent;
-
   /* Start search section */
   let searchDiv = $("<div>");
   let searchBarDiv = $("<div>");
@@ -28,8 +26,11 @@ $(function () {
 
   searchButton.on("click", function () {
     let value = searchBar.val();
-    $("main").text("");
-    getWeather(value);
+    if (value) {
+      $("main").text("");
+      getRecent(value);
+      getWeather(value);
+    }
   });
 
   searchDiv.append("<hr>");
@@ -44,39 +45,64 @@ $(function () {
     });
   });
 
-  let locationsArray = [
-    "Sacramento",
-    "Los Angels",
-    "Mokelumne Hill",
-    "Roseville",
-  ];
+  let recentSection = $("<div>");
+  searchDiv.append(recentSection);
 
-  //   for (let i = 0; i < locationsArray.length; i++) {
-  //     let locationTagDiv = $("<div>");
-  //     let locationName = $("<h4>");
+  function getRecent(x) {
+    recentSection.text("");
+    let seachBarVal = x;
+    let mostRecent = JSON.parse(localStorage.getItem("mostRecent"));
+    if (mostRecent === null) {
+      mostRecent = [];
+    }
 
-  //     searchDiv.append(locationTagDiv);
-  //     locationTagDiv.append(locationName);
-  //     locationName.text(locationsArray[i]);
+    if (x) {
+      if (mostRecent.includes(x)) {
+        // if the parameter passed in is already included this moves the input value to the end of the array so it will appear at the top of the list.
+        mostRecent.push(
+          mostRecent.splice(
+            mostRecent.findIndex((v) => v == x),
+            1
+          )[0]
+        );
+        localStorage.setItem("mostRecent", JSON.stringify(mostRecent));
+      } else {
+        mostRecent.push(seachBarVal);
+        localStorage.setItem("mostRecent", JSON.stringify(mostRecent));
+      }
+    }
 
-  //     locationTagDiv.addClass("locationTagDiv");
-  //   }
+    //   for (let i = 0; i < locationsArray.length; i++) {
+    //     let locationTagDiv = $("<div>");
+    //     let locationName = $("<h4>");
 
-  $.each(locationsArray, function (i) {
-    let locationTagDiv = $("<div>");
-    let locationName = $("<h4>");
+    //     searchDiv.append(locationTagDiv);
+    //     locationTagDiv.append(locationName);
+    //     locationName.text(locationsArray[i]);
 
-    searchDiv.append(locationTagDiv);
-    locationTagDiv.append(locationName);
-    locationName.text(locationsArray[i]);
+    //     locationTagDiv.addClass("locationTagDiv");
+    //   }
+    mostRecent.reverse(); // reverses the array so most recent will appear at the top of the list
+    $.each(mostRecent, function (i) {
+      let locationTagDiv = $("<div>");
+      let locationName = $("<h4>");
 
-    locationTagDiv.addClass("locationTagDiv");
-  });
+      recentSection.append(locationTagDiv);
+      locationTagDiv.append(locationName);
+      locationName.text(mostRecent[i]);
+
+      locationTagDiv.addClass("locationTagDiv");
+    });
+
+    return mostRecent[0];
+  }
 
   // event listener for all location tags
   $("#root").on("click", ".locationTagDiv", function () {
     let thisLocation = $(this).children().text();
-    o(thisLocation);
+    $("main").text("");
+    getRecent(thisLocation);
+    getWeather(thisLocation);
   });
   /* End search section */
 
@@ -97,9 +123,8 @@ $(function () {
     emptyStateLabel.text("No Search History Present");
     emptyStateDiv.append(emptyStateP);
     emptyStateP.text("Search cities for weather");
-    localStorage.setItem("mostRecent", "Sacramento");
   } else {
-    let city = localStorage.getItem("mostRecent");
+    let city = getRecent();
     getWeather(city);
   }
 
