@@ -246,6 +246,14 @@ img {
 .searchButton {
   opacity: 1;
   cursor: pointer;
+
+  &:hover {
+    box-shadow: var(--card-shadow);
+  }
+
+  &:active {
+    box-shadow: inset var(--overlay-shadow);
+  }
 }
 
 .recentSection {
@@ -264,6 +272,15 @@ img {
   color: var(--primary-500);
   border-radius: 4px;
   cursor: pointer;
+
+  &:hover {
+    outline: 1px solid var(--primary-500);
+    outline-offset: -1px;
+  }
+
+  &:active {
+    box-shadow: inset var(--overlay-shadow);
+  }
 }
 
 .clearStorageBtn {
@@ -279,6 +296,17 @@ img {
   font-size: var(--font-h4-size);
   line-height: var(--font-h4-line-height);
   cursor: pointer;
+  margin-top: 8px;
+
+  &:hover {
+    background-color: var(--opacity-danger);
+    border: 1px solid var(--danger-500);
+  }
+
+  &:active {
+    background-color: var(--danger-900);
+    color: var(--neutral-000);
+  }
 }
 
 .clearStorageBtnHide {

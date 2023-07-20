@@ -33,7 +33,6 @@ $(function () {
 
   // Lister for return key to activate submit button
   searchBar.keypress(function (event) {
-    o(event);
     if (event.which == 13) {
       searchButton.click();
     }
