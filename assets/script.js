@@ -49,7 +49,7 @@ $(function () {
   });
 
   // Listener to set the state of the Submit button.  Static vs active
-  searchBar.on("change paste keydown", function () {
+  searchBar.on("change paste keyup", function () {
     if (searchBar.val()) {
       searchButton.addClass("searchButton");
     } else {
