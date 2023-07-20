@@ -192,8 +192,8 @@ $(function () {
         todayWeatherDiv.append(todaysLabel);
         todaysLabel.text(cityName + ", " + date);
 
-        let getTemp = current.main.temp + "ºF";
-        let getWind = current.wind.speed + " MPH";
+        let getTemp = current.main.temp.toFixed(1) + "ºF";
+        let getWind = current.wind.speed.toFixed(1) + " MPH";
         let getHum = current.main.humidity + "%";
         let getIcon = current.weather[0].icon;
         let getDescription = current.weather[0].description;
@@ -244,44 +244,44 @@ $(function () {
 
         let getFiveDay = [
           {
-            date: getDate(7),
-            symbol: getIcon(7),
-            description: weather.list[7].weather[0].description,
-            temperature: weather.list[7].main.temp,
-            wind: weather.list[7].wind.speed,
-            humid: weather.list[7].main.humidity,
+            date: getDate(2),
+            symbol: getIcon(2),
+            description: weather.list[2].weather[0].description,
+            temperature: weather.list[2].main.temp,
+            wind: weather.list[2].wind.speed,
+            humid: weather.list[2].main.humidity,
           },
           {
-            date: getDate(9),
-            symbol: getIcon(9),
-            description: weather.list[9].weather[0].description,
-            temperature: weather.list[15].main.temp,
-            wind: weather.list[15].wind.speed,
-            humid: weather.list[15].main.humidity,
+            date: getDate(10),
+            symbol: getIcon(10),
+            description: weather.list[10].weather[0].description,
+            temperature: weather.list[10].main.temp,
+            wind: weather.list[10].wind.speed,
+            humid: weather.list[10].main.humidity,
           },
           {
-            date: getDate(17),
-            symbol: getIcon(17),
-            description: weather.list[23].weather[0].description,
-            temperature: weather.list[23].main.temp,
-            wind: weather.list[17].wind.speed,
-            humid: weather.list[17].main.humidity,
+            date: getDate(18),
+            symbol: getIcon(18),
+            description: weather.list[18].weather[0].description,
+            temperature: weather.list[18].main.temp,
+            wind: weather.list[18].wind.speed,
+            humid: weather.list[18].main.humidity,
           },
           {
-            date: getDate(25),
-            symbol: getIcon(25),
-            description: weather.list[31].weather[0].description,
-            temperature: weather.list[31].main.temp,
-            wind: weather.list[25].wind.speed,
-            humid: weather.list[25].main.humidity,
+            date: getDate(26),
+            symbol: getIcon(26),
+            description: weather.list[26].weather[0].description,
+            temperature: weather.list[26].main.temp,
+            wind: weather.list[26].wind.speed,
+            humid: weather.list[26].main.humidity,
           },
           {
-            date: getDate(33),
-            symbol: getIcon(33),
-            description: weather.list[33].weather[0].description,
-            temperature: weather.list[39].main.temp,
-            wind: weather.list[33].wind.speed,
-            humid: weather.list[33].main.humidity,
+            date: getDate(34),
+            symbol: getIcon(34),
+            description: weather.list[34].weather[0].description,
+            temperature: weather.list[34].main.temp,
+            wind: weather.list[34].wind.speed,
+            humid: weather.list[34].main.humidity,
           },
         ];
 
@@ -310,8 +310,10 @@ $(function () {
           fdDate.text(getFiveDay[i].date);
           fdSymbol.attr("src", getFiveDay[i].symbol);
           fdDesc.text(getFiveDay[i].description);
-          fdTemp.text("Temperature: " + getFiveDay[i].temperature + "ºF");
-          fdWind.text("Wind Speed: " + getFiveDay[i].wind + "MPH");
+          fdTemp.text(
+            "Temperature: " + getFiveDay[i].temperature.toFixed(1) + "ºF"
+          );
+          fdWind.text("Wind Speed: " + getFiveDay[i].wind.toFixed(1) + "MPH");
           fdHum.text("Humidity: " + getFiveDay[i].humid + "%");
           //   });
         }
