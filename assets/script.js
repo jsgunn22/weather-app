@@ -1,7 +1,3 @@
-function o(nion) {
-  console.log(nion);
-}
-
 $(function () {
   let body = $("body");
   let root = body.children().eq(1);
@@ -24,6 +20,7 @@ $(function () {
   searchButton.addClass("searchButtonDisabled");
   searchButton.text("Submit");
 
+  // Listener for Submit button
   searchButton.click(function () {
     let value = searchBar.val();
     if (value) {
@@ -34,6 +31,7 @@ $(function () {
     }
   });
 
+  // Lister for return key to activate submit button
   searchBar.keypress(function (event) {
     o(event);
     if (event.which == 13) {
@@ -51,6 +49,7 @@ $(function () {
     });
   });
 
+  // Listener to set the state of the Submit button.  Static vs active
   searchBar.on("change paste keydown", function () {
     if (searchBar.val()) {
       searchButton.addClass("searchButton");
@@ -59,9 +58,11 @@ $(function () {
     }
   });
 
+  // creates section for previous section tags
   let recentSection = $("<div>");
   searchDiv.append(recentSection);
 
+  // gets previous searches and appends them to the list.  Most recent on top
   function getRecent(x) {
     recentSection.text("");
     let seachBarVal = x;
@@ -88,16 +89,6 @@ $(function () {
       }
     }
 
-    //   for (let i = 0; i < locationsArray.length; i++) {
-    //     let locationTagDiv = $("<div>");
-    //     let locationName = $("<h4>");
-
-    //     searchDiv.append(locationTagDiv);
-    //     locationTagDiv.append(locationName);
-    //     locationName.text(locationsArray[i]);
-
-    //     locationTagDiv.addClass("locationTagDiv");
-    //   }
     mostRecent.reverse(); // reverses the array so most recent will appear at the top of the list
     $.each(mostRecent, function (i) {
       let locationTagDiv = $("<div>");
@@ -112,8 +103,12 @@ $(function () {
 
     return mostRecent[0];
   }
+
+  // creates a button to allow user to clear previous searches
   let clearBtnDiv = $("<div>");
   searchDiv.append(clearBtnDiv);
+
+  // if there is no stored searches the button will not appear.  c is boolean
   function clearBtn(c) {
     clearBtnDiv.text("");
     if (c) {
@@ -127,6 +122,7 @@ $(function () {
       });
     }
   }
+
   // event listener for all location tags
   $("#root").on("click", ".locationTagDiv", function () {
     let thisLocation = $(this).children().text();
@@ -160,8 +156,8 @@ $(function () {
     getWeather(city);
   }
 
-  // today's weather
   function getWeather(city) {
+    // today's weather
     let currentWeather =
       "https://api.openweathermap.org/data/2.5/weather?q=" +
       city +
@@ -183,7 +179,6 @@ $(function () {
           return getDate;
         }
 
-        // o(dayjs.unix(today.dt).format("MMM D, YYYY"));
         let cityName = city;
         let date = getDate();
 
@@ -242,6 +237,7 @@ $(function () {
           return srcIcon;
         }
 
+        // api only allows for 5 days in three hour incriments.  This array is to target the hotest parts of those days.
         let getFiveDay = [
           {
             date: getDate(2),
@@ -290,7 +286,6 @@ $(function () {
         fiveDayDiv.addClass("fiveDayDiv");
 
         for (let i = 0; i < 5; i++) {
-          //   $.each(getFiveDay, function (i) {
           let card = $("<card>");
           let fdDate = $("<h2>");
           let fdSymbol = $("<img>");
@@ -315,7 +310,6 @@ $(function () {
           );
           fdWind.text("Wind Speed: " + getFiveDay[i].wind.toFixed(1) + "MPH");
           fdHum.text("Humidity: " + getFiveDay[i].humid + "%");
-          //   });
         }
       });
   }
